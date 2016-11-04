@@ -1,16 +1,14 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import {
-  Main,
+  App,
   Index,
   NotFoundPage,
-} from './components/';
+} from '../components/';
 
-const routes = (
-  <Route path="/" component={Main}>
+export default (
+  <Route path="/" component={App}>
     <IndexRoute component={Index} />
     <Route path="*" component={NotFoundPage} />
   </Route>
 );
-
-export default routes;

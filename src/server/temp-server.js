@@ -1,17 +1,37 @@
+// Webpack
+import webpack from 'webpack';
+import webpackMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import Express from 'express';
 import path from 'path';
 import { Server } from 'http';
-import Express from 'express';
+import httpProxy from 'http-proxy';
+// React
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import routes from './routes';
 import { NotFoundPage } from './components/';
 
+import config from '../webpack.dev';
+// Constants
+import {
+  DEFAULT_PORT,
+  API_HOST,
+  API_PORT
+} from '../config/env';
+
 // Initialize the server.
+const targetUrl = `http://${API_HOST}:${API_PORT}`;
 const app = new Express();
 const server = new Server(app);
-const port = process.env.PORT || 3000;
+const proxy = httpProxy.createProxyServer({
+  target: targetUrl,
+  ws: true
+});
+
 const env = process.env.NODE_ENV || 'production';
+const isDeveloping = env !== 'production';
 
 /* Render the complete page.
  *
@@ -28,7 +48,7 @@ function renderFullPage(html) {
   </head>
   <body>
     <div id="root">${html}</div>
-    <script src="./bundle.js"></script>
+    <script src="/assets/bundle.js"></script>
   </body>
   </html>
   `;
@@ -70,8 +90,27 @@ function handleRender(req, res) {
   );
 }
 
-// Define the folder that will be used for static assets.
-app.use(Express.static(path.join(__dirname, 'static')));
+if (isDeveloping) {
+  const compiler = webpack(config);
+  const middleware = webpackMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+    contentBase: config.output.contentBase,
+    stats: {
+      colors: true,
+      hash: false,
+      timings: true,
+      chunks: false,
+      chunkModules: false,
+      modules: false,
+    },
+  });
+
+  app.use(middleware);
+  app.use(webpackHotMiddleware(compiler));
+} else {
+  // Define the folder that will be used for static assets.
+  app.use(Express.static(path.join(__dirname, 'static')));
+}
 
 // Universal routing and rendering.
 app.use(handleRender);
@@ -79,7 +118,7 @@ app.use(handleRender);
 // Start the server
 server.listen(port, (err) => {
   if (err) {
-    return console.err(err);
+    return err;
   }
-  return console.info(`Server running on http://localhost:${port} [${env}]`);
+  return `Server running on http://localhost:${port} [${env}]`;
 });

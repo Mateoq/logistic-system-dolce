@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Main = ({ children }) => (
+const App = ({ children }) => (
   <div className="container">
     <div className="content">
       {children}
@@ -12,4 +12,4 @@ Main.propTypes = {
   children: React.PropTypes.node,
 };
 
-export default Main;
+export default App;

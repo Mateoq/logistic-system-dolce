@@ -1,7 +1,9 @@
 import React from 'react';
 
+// import '../styles/index.scss';
+
 const Index = () => (
-  <div>Hello!</div>
+  <div>Hi!</div>
 );
 
 export default Index;
