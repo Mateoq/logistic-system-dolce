@@ -7,5 +7,5 @@ npm install
 npm run dev
 ```
 
-[npm-url]: https://npmjs.org/package/node-version-check
+[npm-url]: https://www.npmjs.com/package/check-node-version
 [npm-image]: https://img.shields.io/npm/v/node-version-check.svg
