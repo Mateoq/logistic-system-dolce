@@ -3,17 +3,15 @@ import path from 'path';
 import { Server } from 'http';
 import httpProxy from 'http-proxy';
 import PrettyError from 'pretty-error';
-import qs from 'query-string';
 import serialize from 'serialize-javascript';
 // React
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-// import { match, RouterContext } from 'react-router';
-import { createMemoryHistory } from 'history';
+import { match, RouterContext } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+import createHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { ReduxRouter } from 'redux-router';
-import { reduxReactRouter, match } from 'redux-router/server';
+import createStoreWithMiddleware from '../config/configure-store';
 
 // App
 import reducer from '../reducers/';
@@ -30,6 +28,9 @@ import {
   WEBPACK_HOST,
 } from '../config/env';
 import { MOUNT_ID } from '../config/constants';
+
+// Globals.
+global.__CLIENT__ = false; // eslint-disable-line
 
 // Initialize the server.
 const targetUrl = `http://${API_HOST}:${API_PORT}`;
@@ -55,9 +56,9 @@ function renderFullPage(markup, preloadedState) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>New Project</title>
   </head>
-  <body>
+  <body class="c-text">
     <div id="${MOUNT_ID}">${markup}</div>
-    <script>window.__preloadedState = ${preloadedState};</script>
+    <script>window.__PRELOADED_STATE__ = ${preloadedState};</script>
     <script src="${
       process.env.NODE_ENV === 'development' ?
             `http://${WEBPACK_HOST}:${WEBPACK_PORT}/assets/bundle.js` :
@@ -69,46 +70,59 @@ function renderFullPage(markup, preloadedState) {
 }
 
 function handleRender(req, res) {
-  const store = reduxReactRouter({
-    routes,
-    createHistory: createMemoryHistory,
-  })(createStore)(reducer);
-  const query = qs.stringify(req.query);
-  const url = req.path + (query.length ? `?${query}` : '');
+  const memoryHistory = createHistory(req.originalUrl);
+  const store = createStoreWithMiddleware({
+    reducer,
+    memoryHistory,
+  });
+  const history = syncHistoryWithStore(memoryHistory, store);
 
-  store.dispatch(match(url, (err, redirectLocation, routerState) => {
-    let markup;
-    if (err) {
-      // Display error if exists.
-      console.error('Router error:', error);
-      return res.status(500).send(err.message);
-    } else if (redirectLocation) {
-      // In case of redirect propagate the redirect to the browser.
-      return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-    } else if (!routerState) {
-      // Route not found.
-      markup = renderToString(<NotFoundPage />);
-      return res.status(404).send(renderFullPage(markup, null));
-    }
-    // Generate the React markup for the current route
-    const preloadState = serialize(store.getState());
-    markup = renderToString(
-      <Provider store={store} key="provider">
-        <ReduxRouter />
-      </Provider>
-    );
-    return res.status(200).send(renderFullPage(markup, preloadState));
-  }));
+  if (ENV === 'development') {
+    webpackIsomorphicTools.refresh();
+  }
+
+  match({ history, routes, location: req.originalUrl },
+    (err, redirectLocation, renderProps) => {
+      let markup;
+      if (err) {
+        // Display error if exists.
+        console.error('Router error:', pretty.render(err));
+        return res.status(500).send(err.message);
+      } else if (redirectLocation) {
+        // In case of redirect propagate the redirect to the browser.
+        return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+      } else if (!renderProps) {
+        // Route not found.
+        markup = renderToString(<NotFoundPage />);
+        return res.status(404).send(renderFullPage(markup, null));
+      }
+      // Generate the React markup for the current route
+      const preloadState = serialize(store.getState());
+      markup = renderToString(
+        <Provider store={store} key="provider">
+          <RouterContext
+            {...renderProps}
+            assets={webpackIsomorphicTools.assets()}
+          />
+        </Provider>
+      );
+      global.navigator = { userAgent: req.headers['user-agent'] };
+      return res.status(200).send(renderFullPage(markup, preloadState));
+  });
 }
 
 // Define the folder that will be used for static assets.
 app.use(Express.static(path.join(__dirname, 'static')));
 
+// Api hanlder.
 app.use('/api', (req, res) => {
   proxy.web(req, res, {
     target: `${targetUrl}/api`,
   });
 });
+
+// Universal render
+app.use(handleRender);
 
 // Catch errors on the proxy.
 proxy.on('error', (err, req, res) => {
@@ -118,7 +132,7 @@ proxy.on('error', (err, req, res) => {
   };
 
   if (err.code !== 'ECONNRESET') {
-    console.error('proxy error: ', err);
+    console.error('proxy error: ', pretty.render(err));
   }
 
   if (!res.headersSent) {
@@ -136,9 +150,9 @@ server.on('upgrade', (req, socket, head) => {
 });
 
 // Start the server
-server.listen(DEFAULT_PORT, (err) => {
+app.listen(DEFAULT_PORT, (err) => {
   if (err) {
-    return err;
+    return console.error('Server Error:', pretty.render(err));
   }
-  return `Server running on http://localhost:${DEFAULT_PORT} [${ENV}]`;
+  return console.info(`Server running on http://localhost:${DEFAULT_PORT} [${ENV}]`);
 });

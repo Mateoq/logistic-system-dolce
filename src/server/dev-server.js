@@ -9,7 +9,7 @@ import {
   WEBPACK_PORT,
 } from '../config/env';
 
-import webpackConfig from '../../webpack.config.dev';
+import webpackConfig from '../../webpack/webpack.config.dev';
 
 const app = new Express();
 const compiler = webpack(webpackConfig);

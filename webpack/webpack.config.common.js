@@ -3,11 +3,6 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'src', 'static'),
-    publicPath: '/assets/'
-  },
   module: {
     preLoaders: [
       {

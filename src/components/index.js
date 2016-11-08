@@ -1,3 +1,5 @@
-export { default as Main } from './main';
-export { default as Index } from './index-page';
-export { deafult as NotFoundPage } from './not-found-page';
+import NotFound from './not-found';
+
+export default {
+  NotFound,
+};
