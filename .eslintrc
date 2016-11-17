@@ -4,21 +4,23 @@
     "node": true,
     "commonjs": true
   },
+  "parser": "babel-eslint",
   "extends": "airbnb",
   "plugins": [
     "react",
     "jsx-a11y",
-    "import"
+    "import",
+    "class-property"
   ],
   "rules": {
     "indent": ["error", 2],
     "linebreak-style": "off",
-    "no-underscore-dangle": ["error", { allow: ["__PRELOADED_STATE__"] }],
-    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+    "no-underscore-dangle": ["error", { "allow": ["__PRELOADED_STATE__"] }],
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }]
   },
   "globals": {
-    __CLIENT__: true,
-    __DEVTOOLS__: true,
-    webpackIsomorphicTools: true,
+    "__CLIENT__": true,
+    "__DEVTOOLS__": true,
+    "webpackIsomorphicTools": true
   }
 }

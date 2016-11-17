@@ -1,7 +1,6 @@
 import Express from 'express';
 import path from 'path';
 import { Server } from 'http';
-import httpProxy from 'http-proxy';
 import PrettyError from 'pretty-error';
 import serialize from 'serialize-javascript';
 // React
@@ -11,12 +10,22 @@ import { match, RouterContext } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import createHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
+
+// Config
 import createStoreWithMiddleware from '../config/configure-store';
+import configureSession from './utils/config/configure-session';
+import configureApiProxy from './utils/config/configure-api-proxy';
+
+// Utils.
+import validateAuth from './utils/auth/validate-auth';
 
 // App
-import reducer from '../reducers/';
+import reducer from '../client/reducers/';
 import routes from '../config/routes';
-import { NotFoundPage } from '../components/';
+import { NotFound } from '../client/components/';
+
+// Actions
+import { loginSuccess } from '../client/actions/user-actions';
 
 // Constants
 import {
@@ -36,11 +45,8 @@ global.__CLIENT__ = false; // eslint-disable-line
 const targetUrl = `http://${API_HOST}:${API_PORT}`;
 const app = new Express();
 const server = new Server(app);
-const proxy = httpProxy.createProxyServer({
-  target: targetUrl,
-  ws: true,
-});
 const pretty = new PrettyError();
+const proxy = configureApiProxy(targetUrl);
 
 /* Render the complete page.
  * @param {string} markup - Prerendered react markup.
@@ -69,7 +75,7 @@ function renderFullPage(markup, preloadedState) {
   `;
 }
 
-function handleRender(req, res) {
+function handleRender(req, res, next) {
   const memoryHistory = createHistory(req.originalUrl);
   const store = createStoreWithMiddleware({
     reducer,
@@ -81,7 +87,13 @@ function handleRender(req, res) {
     webpackIsomorphicTools.refresh();
   }
 
-  match({ history, routes, location: req.originalUrl },
+  // Validate session.
+  const user = validateAuth(req.session);
+  if (user) {
+    store.dispatch(loginSuccess(user));
+  }
+
+  match({ history, routes: routes.getRoutes(store), location: req.originalUrl },
     (err, redirectLocation, renderProps) => {
       let markup;
       if (err) {
@@ -93,9 +105,11 @@ function handleRender(req, res) {
         return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
       } else if (!renderProps) {
         // Route not found.
-        markup = renderToString(<NotFoundPage />);
-        return res.status(404).send(renderFullPage(markup, null));
+        markup = renderToString(<NotFound />);
+        res.status(404).send(renderFullPage(markup, null));
+        return next();
       }
+
       // Generate the React markup for the current route
       const preloadState = serialize(store.getState());
       markup = renderToString(
@@ -108,49 +122,26 @@ function handleRender(req, res) {
       );
       global.navigator = { userAgent: req.headers['user-agent'] };
       return res.status(200).send(renderFullPage(markup, preloadState));
-  });
+    });
 }
 
-// Define the folder that will be used for static assets.
-app.use(Express.static(path.join(__dirname, 'static')));
+// Setup session
+app.use(configureSession());
 
-// Api hanlder.
-app.use('/api', (req, res) => {
-  proxy.web(req, res, {
-    target: `${targetUrl}/api`,
-  });
-});
+// Api handler.
+app.use('/api/*', proxy.handleProxy);
 
 // Universal render
 app.use(handleRender);
 
-// Catch errors on the proxy.
-proxy.on('error', (err, req, res) => {
-  const json = {
-    error: 'proxy_error',
-    reason: err.message,
-  };
-
-  if (err.code !== 'ECONNRESET') {
-    console.error('proxy error: ', pretty.render(err));
-  }
-
-  if (!res.headersSent) {
-    res.writeHead(500, {
-      'content-type': 'application/json',
-    });
-  }
-
-  res.end(JSON.stringify(json));
-});
+// Define the folder that will be used for static assets.
+app.use(Express.static(path.join(__dirname, '..', 'static')));
 
 // On server upgraded.
-server.on('upgrade', (req, socket, head) => {
-  proxy.ws(req, socket, head);
-});
+server.on('upgrade', proxy.handleUpgrade);
 
 // Start the server
-app.listen(DEFAULT_PORT, (err) => {
+server.listen(DEFAULT_PORT, (err) => {
   if (err) {
     return console.error('Server Error:', pretty.render(err));
   }

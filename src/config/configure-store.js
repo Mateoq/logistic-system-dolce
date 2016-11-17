@@ -1,9 +1,14 @@
 import { createStore, applyMiddleware } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
-import thunkMiddleware from 'redux-thunk';
+import { createEpicMiddleware } from 'redux-observable';
 import createLogger from 'redux-logger';
+
+// Constants.
 import { ENV } from './env';
-import { CLIENT_ENV } from './constants';
+// import { CLIENT_ENV } from './constants';
+
+// Epic.
+import rootEpic from '../client/epics/';
 
 /* Create a wrapped redux store with middleware
  * @param {object} history - Browser history.
@@ -15,14 +20,14 @@ function createStoreWithMiddleware({
   history,
   reducer,
   initialState,
-  appEnv,
  }) {
   const reduxRouterMiddleware = routerMiddleware(history);
 
   const middleware = [reduxRouterMiddleware];
 
-  if (appEnv === CLIENT_ENV) {
-    middleware.push(thunkMiddleware, createLogger());
+  if (__CLIENT__) {
+    const epicMiddleware = createEpicMiddleware(rootEpic);
+    middleware.push(epicMiddleware, createLogger());
   }
 
   const createStoreWrapper = applyMiddleware(...middleware)(createStore);
@@ -30,8 +35,8 @@ function createStoreWithMiddleware({
   const store = createStoreWrapper(reducer, initialState);
 
   if (ENV === 'development' && module.hot) {
-    module.hot.accept('../reducers', () => {
-      const nextRootReducer = require('../reducers/').default; // eslint-disable-line global-require
+    module.hot.accept('../client/reducers', () => {
+      const nextRootReducer = require('../client/reducers').default; // eslint-disable-line global-require
       store.replaceReducer(nextRootReducer);
     });
   }

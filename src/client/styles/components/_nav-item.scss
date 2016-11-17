@@ -1,0 +1,22 @@
+@import "../mixins/_base.scss";
+@import "../utils/_base.scss";
+
+$nav-font-size: 1em;
+
+.c-nav__item {
+  @include transition(background 0.3s);
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &--cta {
+    border: none;
+    background: none;
+    font-size: $nav-font-size;
+
+    &:hover {
+      background-color: $gray-brand;
+    }
+  }
+}

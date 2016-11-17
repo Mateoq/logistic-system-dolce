@@ -11,7 +11,7 @@ const {
 } = require('../src/config/env');
 
 // Constants
-const ENTRY_POINT = path.resolve(__dirname, '..', 'src', 'client.js');
+const ENTRY_POINT = path.resolve(__dirname, '..', 'src', 'client', 'index.js');
 const PROJECT_SRC = path.resolve(__dirname, '..', 'src');
 const ASSETS_PATH = path.resolve(__dirname, '..', 'src', 'static', 'assets');
 
@@ -44,8 +44,8 @@ module.exports = merge(commonConfig, {
         exclude: /(node_modules|bower_components|server)/,
         loader: 'babel',
         query: {
-          presets: ['es2016-node5', 'react'],
-          plugins: ['transform-object-rest-spread', 'react-hot-loader/babel']
+          presets: ['es2016-node5', 'react', 'stage-0'],
+          plugins: ['syntax-decorators', 'react-hot-loader/babel']
         }
       },
       {

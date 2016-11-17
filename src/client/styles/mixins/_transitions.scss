@@ -1,0 +1,10 @@
+@mixin transition($props) {
+  -webkit-transition: $props;
+  -moz-transition: $props;
+  -o-transition: $props;
+  transition: $props;
+}
+
+@mixin button-transition($props) {
+  transition: $props 0.2s;
+}

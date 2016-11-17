@@ -7,7 +7,7 @@ const webpackIsomorphicToolsConfig = require('./webpack-isomorphic-tools');
 const commonConfig = require('./webpack.config.common');
 
 // Constants
-const ENTRY_POINT = path.resolve(__dirname, '..', 'src', 'client.js');
+const ENTRY_POINT = path.resolve(__dirname, '..', 'src', 'client', 'index.js');
 
 // Loaders
 const assetsPath = path.resolve(__dirname, '..', 'src', 'static', 'assets');
@@ -31,8 +31,8 @@ module.exports = merge(commonConfig, {
         exclude: /(node_modules|bower_components|server)/,
         loader: 'babel',
         query: {
-          presets: ["es2016-node5", "react"],
-          plugins: ["transform-object-rest-spread"]
+          presets: ['es2016-node5', 'react', 'stage-0'],
+          plugins: ['syntax-decorators']
         }
       },
       {

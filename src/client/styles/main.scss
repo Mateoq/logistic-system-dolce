@@ -1,0 +1,22 @@
+@import "../../../node_modules/blaze/scss/blaze.scss";
+
+@import "animations/_base.scss";
+@import "mixins/_base.scss";
+@import "utils/_base.scss";
+
+body {
+  background: #FFF;
+}
+
+button, a {
+
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.app-content {
+  &__main-column {
+    position: relative;
+  }
+}

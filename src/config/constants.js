@@ -1,8 +1,18 @@
-// Action types:
-// App
-export const LOCATION_CHANGE = 'LOCATION_CHANGE';
-// Counter
-export const INCREMENT = 'INCREMENT';
-export const DECREMENT = 'DECREMENT';
-
+// UI:
+// =====================
 export const MOUNT_ID = 'root';
+
+// General.
+// =====================
+export const USERNAME = 'username';
+export const PASSWORD = 'password';
+// export const REMEMBER_ME = 'rememberMe';
+// export const TOKEN_ID = 'USER_TOKEN';
+
+// API service.
+// ======================
+
+
+// Request mehtods.
+// export const POST = 'post';
+// export const GET = 'get';

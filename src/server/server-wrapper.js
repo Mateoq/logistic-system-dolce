@@ -2,7 +2,7 @@ const path = require('path');
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 const webpackIsomorphicToolsConfig = require('../../webpack/webpack-isomorphic-tools');
 
-const SOURCE_DIR = path.resolve(__dirname, '..');
+const SOURCE_DIR = path.resolve(__dirname, '..', 'client');
 
 global.webpackIsomorphicTools =
   new WebpackIsomorphicTools(webpackIsomorphicToolsConfig)
