@@ -4,7 +4,8 @@ import { createReducer } from 'redux-create-reducer';
 import {
   UPDATE_USERNAME,
   UPDATE_PASSWORD,
- TOGGLE_REMEMBERME,
+  TOGGLE_REMEMBERME,
+  LOGIN_SUCCESS,
 } from '../constants/actions';
 
 const initialState = {
@@ -26,6 +27,7 @@ const actionHandlers = {
     ...state,
     rememberMe: !state.rememberMe,
   }),
+  [LOGIN_SUCCESS]: () => (initialState),
 };
 
 export default createReducer(initialState, actionHandlers);

@@ -12,6 +12,7 @@ const NavItem = ({
   link,
   onClick,
 }) => {
+  const componentClass = 'c-nav__item';
   let config = '';
 
   if (right) {
@@ -27,7 +28,7 @@ const NavItem = ({
   if (link) {
     config += 'c-nav__item--link';
     return (
-      <Link className={`c-nav__item ${config}`} to={link}>
+      <Link className={`${componentClass} ${config.trim()}`} to={link}>
         {children}
       </Link>
     );
@@ -36,14 +37,14 @@ const NavItem = ({
   if (onClick) {
     config += 'c-nav__item--cta';
     return (
-      <button onClick={onClick} className={`c-nav__item ${config}`}>
+      <button onClick={onClick} className={`${componentClass} ${config.trim()}`}>
         {children}
       </button>
     );
   }
 
   return (
-    <div className={`c-nav__item ${config}`}>
+    <div className={`${componentClass} ${config.trim()}`}>
       {children}
     </div>
   );

@@ -1,4 +1,8 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+
+// Animations
+// import ReactCssTransitionGroup from 'react-addons-css-transition-group';
 
 // Containers.
 import {
@@ -8,21 +12,26 @@ import {
 } from './';
 
 // Components
-import { GridCell } from '../components/';
+import { GridCell, Panel } from '../components/';
 
 // Styles.
 import '../styles/main.scss';
 
-const App = ({ children }) => (
+const App = ({ children, user }) => (
   <main className="o-grid o-grid--no-gutter app-content">
-    <GridCell width={15} className="app-content__nav-column">
-      <SideNav />
-    </GridCell>
-    <GridCell width={85} className="app-content__main-column">
-      <HeaderNav />
-      <div className="o-panel o-panel--nav-top views-container">
+    {user.isAuthenticated &&
+      <GridCell
+        width={15}
+        className="app-content__nav-column"
+      >
+        <SideNav />
+      </GridCell>
+    }
+    <GridCell width={(user.isAuthenticated) ? 85 : 100} className="app-content__main-column">
+      {user.isAuthenticated && <HeaderNav />}
+      <Panel navTop={user.isAuthenticated} className="views-container">
         {children}
-      </div>
+      </Panel>
     </GridCell>
     <LoadingContainer />
   </main>
@@ -30,6 +39,9 @@ const App = ({ children }) => (
 
 App.propTypes = {
   children: PropTypes.node.isRequired,
+  user: PropTypes.shape().isRequired,
 };
 
-export default App;
+export default connect(
+  state => ({ user: state.user })
+)(App);

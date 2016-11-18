@@ -1,4 +1,4 @@
-@import "../utils/_base.scss";
+@import "../utils/_colors.scss";
 @import "../animations/_bounce.scss";
 @import "../mixins/_base.scss";
 
@@ -27,8 +27,16 @@ $delay-range: 0.32s;
     height: $animation-size / 3;
     border-radius: 100%;
     display: inline-block;
-    background-color: $gray-brand;
+    background-color: $brand-color;
 
     @include animation(bounce $animation-duration ease-in-out 0s infinite both);
+
+    &[data-pos="1"] {
+      @include animation-delay(-$delay-range);
+    }
+
+    &[data-pos="2"] {
+      @include animation-delay(-$delay-range / 2);
+    }
   }
 }

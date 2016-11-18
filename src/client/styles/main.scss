@@ -16,6 +16,8 @@ button, a {
 }
 
 .app-content {
+  height: $app-content-height;
+
   &__main-column {
     position: relative;
   }

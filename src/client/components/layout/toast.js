@@ -3,14 +3,16 @@ import React, { PropTypes } from 'react';
 // Utils.
 import { componentHelpers } from '../../utils/';
 
-const Table = ({
+const Toast = ({
   children,
   className,
+  type,
   theme,
   layout,
 }) => {
-  const componentClass = 'c-table';
+  const componentClass = 'c-alert';
   let config = componentHelpers.generateComponentStyleConfig(componentClass, [
+    type,
     theme,
     layout,
   ]);
@@ -24,11 +26,12 @@ const Table = ({
   );
 };
 
-Table.propTypes = {
+Toast.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  type: PropTypes.string,
   theme: PropTypes.string,
   layout: PropTypes.string,
 };
 
-export default Table;
+export default Toast;

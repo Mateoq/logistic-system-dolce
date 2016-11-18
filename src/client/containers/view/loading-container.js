@@ -12,8 +12,8 @@ const LoadingContainer = ({ isLoading }) => {
   return (
     <ReactCssTransitionGroup
       transitionName={'simple-transition'}
-      transitionEnterTimeout={200}
-      transitionLeaveTimeout={500}
+      transitionEnterTimeout={300}
+      transitionLeaveTimeout={700}
     >
       {loading}
     </ReactCssTransitionGroup>

@@ -1,5 +1,8 @@
 import React, { PropTypes } from 'react';
 
+// Utils.
+import { componentHelpers } from '../../utils/';
+
 const Nav = ({
   children,
   className,
@@ -8,28 +11,23 @@ const Nav = ({
   theme,
   layout,
 }) => {
+  const componentClass = 'c-nav';
   let config = '';
 
   if (inline) {
     config += 'c-nav--inline ';
   }
 
-  if (position) {
-    config += `c-nav--${position} `;
-  }
-
-  if (theme) {
-    config += `c-nav--${theme} `;
-  }
-
-  if (layout) {
-    config += `c-nav--${layout} `;
-  }
+  config += componentHelpers.generateComponentStyleConfig(componentClass, [
+    position,
+    theme,
+    layout,
+  ]);
 
   config += className || '';
 
   return (
-    <nav className={`c-nav ${config}`}>
+    <nav className={`${componentClass} ${config.trim()}`}>
       {children}
     </nav>
   );

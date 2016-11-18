@@ -8,6 +8,7 @@ const GridCell = ({
   fixedWidth,
   responsiveSuffixes,
 }) => {
+  const componentClass = 'o-grid__cell';
   let config = '';
 
   if (width) {
@@ -25,11 +26,13 @@ const GridCell = ({
   }
 
   if (fixedWidth) {
-    config += 'o-grid__cell--width-fixed';
+    config += 'o-grid__cell--width-fixed ';
   }
 
+  config += className || '';
+
   return (
-    <div className={`o-grid__cell ${config} ${className}`}>
+    <div className={`${componentClass} ${config.trim()}`}>
       {children}
     </div>
   );

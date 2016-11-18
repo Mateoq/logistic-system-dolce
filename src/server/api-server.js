@@ -20,7 +20,6 @@ app.get('/api', (req, res) => {
 });
 
 app.get('/api/callFetchUser', (req, res) => {
-  console.log('API REQUEST');
   fetchUserRequest(req.query)
     .subscribe(
       (data) => {
@@ -57,8 +56,16 @@ app.get('/api/callFetchUser', (req, res) => {
     );
 });
 
-app.post('/api/destroyUserSession', () => {
-  console.log('DESTROY');
+app.post('/api/destroyUserSession', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      res.status(503).send({ err });
+    }
+
+    res.status(200).send({
+      userLogout: true,
+    });
+  });
 });
 
 app.listen(API_PORT, (err) => {

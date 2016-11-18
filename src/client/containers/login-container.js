@@ -30,7 +30,6 @@ import '../styles/login-container.scss';
 class LoginContainer extends Component {
   static propTypes = {
     actions: PropTypes.shape(),
-    user: PropTypes.shape(),
     username: PropTypes.string,
     password: PropTypes.string,
     rememberMe: PropTypes.bool,
@@ -72,7 +71,6 @@ class LoginContainer extends Component {
 
   render() {
     const {
-      user,
       username,
       password,
       rememberMe,
@@ -90,7 +88,6 @@ class LoginContainer extends Component {
             handleToggleRememberMe={this.handleToggleRememberMe}
           />
         </div>
-        <div>{JSON.stringify(user)}</div>
       </div>
     );
   }
@@ -99,7 +96,6 @@ class LoginContainer extends Component {
 export default connect(
   state => ({
     ...state.loginForm,
-    user: state.user.data,
   }),
   dispatch => ({
     actions: bindActionCreators({

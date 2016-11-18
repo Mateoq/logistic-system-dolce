@@ -1,25 +1,25 @@
 import React, { PropTypes } from 'react';
 
-const Grid = ({
+const Panel = ({
   children,
   className,
-  padding,
-  wrap,
+  navTop,
+  navBottom,
   layout,
 }) => {
-  const componentClass = 'o-grid';
-  let config;
+  const componentClass = 'o-panel';
+  let config = '';
 
-  if (padding === false) {
-    config += 'o-grid--no-gutter ';
+  if (navTop) {
+    config += 'o-panel--nav-top ';
   }
 
-  if (wrap) {
-    config += 'o-grid--wrap ';
+  if (navBottom) {
+    config += 'o-panel--nav-bottom ';
   }
 
   if (layout) {
-    config += `o-grid--${layout} `;
+    config += `o-panel--${layout} `;
   }
 
   config += className || '';
@@ -31,12 +31,12 @@ const Grid = ({
   );
 };
 
-Grid.propTypes = {
+Panel.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  padding: PropTypes.bool,
-  wrap: PropTypes.bool,
+  navTop: PropTypes.bool,
+  navBottom: PropTypes.bool,
   layout: PropTypes.string,
 };
 
-export default Grid;
+export default Panel;
