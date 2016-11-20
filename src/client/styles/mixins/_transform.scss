@@ -1,0 +1,7 @@
+@mixin transform($props) {
+  -webkit-transform: $props;
+  -moz-transform: $props;
+  -ms-transform: $props;
+  -o-transform: $props;
+  transform: $props;
+}

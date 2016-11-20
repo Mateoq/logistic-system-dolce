@@ -1,0 +1,36 @@
+@import "../mixins/_base.scss";
+
+$translate-transition-x: -20px;
+$translate-transition-y: 0;
+$transition-duration: 500ms;
+
+.appear-left-transition {
+  &-enter {
+    opacity: 0.01;
+    @include transform(translate(
+      $translate-transition-x,
+      $translate-transition-y
+    ));
+
+    &-active {
+      opacity: 1;
+      @include transform(translate(0, 0));
+      transition: opacity $transition-duration ease-in,
+       transform $transition-duration ease-in;
+    }
+  }
+
+  &-leave {
+    opacity: 1;
+
+    &-active {
+      opacity: 0.01;
+      @include transform(translate(
+        $translate-transition-x,
+        $translate-transition-y
+      ));
+      transition: opacity $transition-duration ease-in,
+       transform $transition-duration ease-in;
+    }
+  }
+}

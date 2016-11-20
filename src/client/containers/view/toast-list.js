@@ -1,18 +1,40 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+
+// Animations.
+import ReactCssTransitionGroup from 'react-addons-css-transition-group';
 
 // Components.
 import { ToastContainer, Toast } from '../../components/';
 
-class ToastList extends Component {
+const ToastList = ({ toastList }) => {
+  const animation = {
+    name: 'appear-left-transition',
+    enterDelay: 600,
+    leaveDelay: 300,
+  };
 
-  render() {
-    return (
-      <ToastContainer bottomRight>
-        <Toast>
-          asdf
+  return (
+    <ReactCssTransitionGroup
+      component={ToastContainer}
+      topLeft
+      transitionName={animation.name}
+      transitionEnterTimeout={animation.enterDelay}
+      transitionLeaveTimeout={animation.leaveDelay}
+    >
+      {toastList.map(toast => (
+        <Toast key={toast.id} type={toast.type}>
+          {toast.message}
         </Toast>
-      </ToastContainer>
-    );
-  }
-}
+      ))}
+    </ReactCssTransitionGroup>
+  );
+};
+
+ToastList.propTypes = {
+  toastList: PropTypes.arrayOf(PropTypes.object),
+};
+
+export default connect(
+  state => ({ toastList: state.toastList })
+)(ToastList);

@@ -1,13 +1,11 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-// Animations
-// import ReactCssTransitionGroup from 'react-addons-css-transition-group';
-
 // Containers.
 import {
   SideNav,
   HeaderNav,
+  ToastList,
   LoadingContainer,
 } from './';
 
@@ -33,6 +31,7 @@ const App = ({ children, user }) => (
         {children}
       </Panel>
     </GridCell>
+    <ToastList />
     <LoadingContainer />
   </main>
 );

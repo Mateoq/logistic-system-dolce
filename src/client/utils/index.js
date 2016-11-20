@@ -2,4 +2,4 @@ export { default as string } from './helpers/string'; // eslint-disable-line imp
 
 export { default as array } from './helpers/array';
 
-export { default as componentTools } from './helpers/component-helpers';
+export { default as componentHelpers } from './helpers/component-helpers';

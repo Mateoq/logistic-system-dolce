@@ -9,15 +9,16 @@ import { array } from '../utils/';
 const initialState = [];
 
 const actionHandlers = {
-  [ADD_TOAST]: (state, action) => ([
+  [ADD_TOAST]: (state, { message }) => ([
     ...state, {
-      id: action.id,
-      type: action.type,
-      message: action.message,
+      id: message.id,
+      type: message.type,
+      message: message.message,
     },
   ]),
   [REMOVE_TOAST]: (state, { id }) => {
-    const index = array.findIndexById(state, { id });
+    const index = array.findIndexById(state, id);
+
     if (index >= 0) {
       return [
         ...state.slice(0, index),

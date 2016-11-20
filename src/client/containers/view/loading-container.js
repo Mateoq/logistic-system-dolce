@@ -8,12 +8,17 @@ import ReactCssTransitionGroup from 'react-addons-css-transition-group';
 import { Loading } from '../../components/';
 
 const LoadingContainer = ({ isLoading }) => {
+  const animation = {
+    name: 'simple-transition',
+    enterDelay: 300,
+    leaveDelay: 700,
+  };
   const loading = isLoading && (<Loading key={'loading-view'} />);
   return (
     <ReactCssTransitionGroup
-      transitionName={'simple-transition'}
-      transitionEnterTimeout={300}
-      transitionLeaveTimeout={700}
+      transitionName={animation.name}
+      transitionEnterTimeout={animation.enterDelay}
+      transitionLeaveTimeout={animation.leaveDelay}
     >
       {loading}
     </ReactCssTransitionGroup>

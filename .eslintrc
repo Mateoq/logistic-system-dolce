@@ -16,7 +16,8 @@
     "indent": ["error", 2],
     "linebreak-style": "off",
     "no-underscore-dangle": ["error", { "allow": ["__PRELOADED_STATE__"] }],
-    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }]
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   },
   "globals": {
     "__CLIENT__": true,
