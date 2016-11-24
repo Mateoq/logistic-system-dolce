@@ -1,5 +1,6 @@
 const karmaWebpack = require('karma-webpack');
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = (config) => {
   config.set({
@@ -13,13 +14,19 @@ module.exports = (config) => {
       karmaWebpack,
       'karma-mocha',
       'karma-phantomjs-launcher',
-      'karma-mocha-reporter'
+      'karma-mocha-reporter',
+      'karma-junit-reporter'
     ],
     browsers: ['PhantomJS'],
     preprocessors: {
       'src/tests/**/*.spec.js': ['webpack']
     },
-    reporters: ['mocha'],
+    reporters: ['mocha', 'junit'],
+    junitReporter: {
+      outputDir: path.resolve(__dirname, 'reports'),
+      outputFile: 'report.xml',
+      useBrowserName: false
+    },
     webpack: {
       resolve: {
         alias: {

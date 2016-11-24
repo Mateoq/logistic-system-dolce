@@ -1,5 +1,8 @@
 server.json
 
+# Test Reports
+reports
+
 #Mac
 .DS_Store
 
