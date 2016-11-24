@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<testsuite name="PhantomJS 2.1.1 (Mac OS X 0.0.0)" package="" timestamp="2016-11-21T22:00:52" id="0" hostname="H5600.ad.hugeinc.com" tests="1" errors="0" failures="0" time="0.006">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1"/>
+  </properties>
+  <testcase name="Client :: Components :: Layout :: Grid Should render correctly" time="0.006" classname="Client :: Components :: Layout :: Grid"/>
+  <system-out>
+    <![CDATA[PhantomJS 2.1.1 (Mac OS X 0.0.0) ERROR: 'Warning: You are manually calling a React.PropTypes validation function for the `children` prop on `Grid`. This is deprecated and will not work in the next major version. You may be seeing this warning due to a third-party PropTypes library. See https://fb.me/react-warning-dont-call-proptypes for details.'
+,PhantomJS 2.1.1 (Mac OS X 0.0.0) ERROR: 'Warning: You are manually calling a React.PropTypes validation function for the `className` prop on `Grid`. This is deprecated and will not work in the next major version. You may be seeing this warning due to a third-party PropTypes library. See https://fb.me/react-warning-dont-call-proptypes for details.'
+,PhantomJS 2.1.1 (Mac OS X 0.0.0) ERROR: 'Warning: You are manually calling a React.PropTypes validation function for the `padding` prop on `Grid`. This is deprecated and will not work in the next major version. You may be seeing this warning due to a third-party PropTypes library. See https://fb.me/react-warning-dont-call-proptypes for details.'
+,PhantomJS 2.1.1 (Mac OS X 0.0.0) ERROR: 'Warning: You are manually calling a React.PropTypes validation function for the `wrap` prop on `Grid`. This is deprecated and will not work in the next major version. You may be seeing this warning due to a third-party PropTypes library. See https://fb.me/react-warning-dont-call-proptypes for details.'
+,PhantomJS 2.1.1 (Mac OS X 0.0.0) ERROR: 'Warning: You are manually calling a React.PropTypes validation function for the `layout` prop on `Grid`. This is deprecated and will not work in the next major version. You may be seeing this warning due to a third-party PropTypes library. See https://fb.me/react-warning-dont-call-proptypes for details.'
+
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>
