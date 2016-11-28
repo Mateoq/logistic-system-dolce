@@ -3,16 +3,17 @@ import React, { PropTypes } from 'react';
 // Utils.
 import { componentHelpers } from '../../utils/';
 
-const CheckBox = ({
+const RadioButton = ({
   children,
   className,
+  value,
   onChange,
   name,
-  value,
+  checked,
   theme,
   layout,
 }) => {
-  const componentClass = 'check-box';
+  const componentClass = 'radio-button';
   let config = '';
 
   config += componentHelpers.generateComponentStyleConfig(componentClass, [
@@ -30,8 +31,9 @@ const CheckBox = ({
       <input
         id={name}
         name={name}
-        type="checkbox"
+        type="radio"
         value={value}
+        checked={checked}
         onChange={onChange}
       />
       {children}
@@ -39,14 +41,15 @@ const CheckBox = ({
   );
 };
 
-CheckBox.propTypes = {
+RadioButton.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  value: PropTypes.any.isRequired, // eslint-disable-line react/forbid-prop-types
   onChange: PropTypes.func,
   name: PropTypes.string,
-  value: PropTypes.string,
-  className: PropTypes.string,
+  checked: PropTypes.bool,
   theme: PropTypes.string,
   layout: PropTypes.string,
 };
 
-export default CheckBox;
+export default RadioButton;

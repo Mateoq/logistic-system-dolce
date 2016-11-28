@@ -1,5 +1,8 @@
 import React, { PropTypes } from 'react';
 
+// Utils.
+import { componentHelpers } from '../../utils/';
+
 const Button = ({
   id,
   type,
@@ -8,12 +11,15 @@ const Button = ({
   onClick,
   group,
   theme,
+  layout,
 }) => {
+  const componentClass = 'c-button';
   let config = '';
 
-  if (theme) {
-    config += `c-button--${theme} `;
-  }
+  config += componentHelpers.generateComponentStyleConfig(componentClass, [
+    theme,
+    layout,
+  ]);
 
   config += className || '';
 
@@ -22,7 +28,7 @@ const Button = ({
       id={id}
       type={type}
       data-group={group}
-      className={`c-button ${config}`}
+      className={`c-button ${config.trim()}`}
       onClick={onClick}
     >
       {children}
@@ -38,6 +44,7 @@ Button.propTypes = {
   group: PropTypes.string,
   type: PropTypes.string,
   theme: PropTypes.string,
+  layout: PropTypes.string,
 };
 
 export default Button;

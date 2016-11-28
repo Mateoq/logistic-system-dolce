@@ -1,18 +1,33 @@
 import React, { PropTypes } from 'react';
 
+// Utils.
+import { componentHelpers } from '../../utils/';
+
 const InputBox = ({
   value,
   name,
   label,
   type,
   onChange,
-  classNames,
+  className,
   placeholder,
   group,
+  theme,
+  layout,
 }) => {
+  const componentClass = 'input-box';
+  let config = '';
+
+  config += componentHelpers.generateComponentStyleConfig(componentClass, [
+    theme,
+    layout,
+  ]);
+
+  config += className || '';
+
   if (label) {
     return (
-      <label htmlFor={name} className={`c-label o-form-element ${classNames}`}>
+      <label htmlFor={name} className={`c-label o-form-element ${config.trim()}`}>
         {label}
         <input
           id={name}
@@ -32,7 +47,7 @@ const InputBox = ({
       id={name}
       name={name}
       type={type || 'text'}
-      className="c-field"
+      className={`c-field ${config.trim()}`}
       placeholder={placeholder}
       value={value}
       onChange={onChange}
@@ -47,9 +62,11 @@ InputBox.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   onChange: PropTypes.func,
-  classNames: PropTypes.string,
+  className: PropTypes.string,
   placeholder: PropTypes.string,
   group: PropTypes.string,
+  theme: PropTypes.string,
+  layout: PropTypes.string,
 };
 
 export default InputBox;

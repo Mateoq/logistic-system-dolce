@@ -1,18 +1,11 @@
 @import "../mixins/transitions";
 
 .buttons-grid {
-  width: 500px;
-}
+  width: 50%;
 
-.buttons-grid__cell {
-  width: 100px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.buttons-grid__item {
-    width: 80px;
-    height: 80px;
+  &__cell {
+    width: 60px;
+    height: 60px;
     cursor: pointer;
     font-size: 24px;
     border-radius: 4px;
@@ -23,4 +16,14 @@
     &:hover {
       background-color: #CCC;
     }
+
+    &--active {
+      background-color: #CCC;
+    }
+
+    input {
+      display: none;
+      visibility: hidden;
+    }
+  }
 }

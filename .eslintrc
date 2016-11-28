@@ -2,11 +2,13 @@
   "env": {
     "browser": true,
     "node": true,
-    "commonjs": true
+    "commonjs": true,
+    "mocha": true
   },
   "parser": "babel-eslint",
   "extends": "airbnb",
   "plugins": [
+    "mocha",
     "react",
     "jsx-a11y",
     "import",

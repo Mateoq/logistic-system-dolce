@@ -7,6 +7,7 @@ import user from './user';
 import toastList from './toast-list-reducer';
 import loading from './loading';
 import loginForm from './login-form';
+import dashboard from './dashboard-reducer';
 import packageReception from './package-reception';
 
 export default combineReducers({
@@ -15,6 +16,7 @@ export default combineReducers({
   toastList,
   loading,
   loginForm,
+  dashboard,
   packageReception,
   counter,
 });
