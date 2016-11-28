@@ -3,6 +3,9 @@ server.json
 # Test Reports
 # reports
 
+# static
+assets
+
 #Mac
 .DS_Store
 

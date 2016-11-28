@@ -30,7 +30,7 @@ const ButtonGridCell = ({
       </RadioButton>
     </div>
   );
-}
+};
 
 ButtonGridCell.propTypes = {
   children: PropTypes.node.isRequired,
