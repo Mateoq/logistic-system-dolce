@@ -4,14 +4,14 @@ web:
   links:
    - db
   ports:
-   - "8000:8000"
+   - "3000:3000"
   volumes:
    - .:/usr/src/app/
   environment:
-   NODE_ENV: development 
+   PORT: 3000,
+   NODE_ENV: development,
    MONGO_URL: mongodb://db:27017/logistic-system-dolce
 db:
   image: mongo:latest
   ports:
    - "27017:27017"
-
