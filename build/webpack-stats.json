@@ -8,7 +8,7 @@
   ],
   "version": "1.13.3",
   "hash": "a329bb62e466ae85a843",
-  "time": 46767,
+  "time": 85139,
   "publicPath": "http://localhost:3002/assets/",
   "assetsByChunkName": {
     "main": "bundle.js"
@@ -2091,7 +2091,7 @@
         0
       ],
       "assets": [],
-      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\rxjs\\operator\\map.js",
+      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\rxjs\\Subject.js",
       "failed": false,
       "errors": 0,
       "warnings": 0,
@@ -6171,7 +6171,7 @@
         0
       ],
       "assets": [],
-      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\react-redux\\lib\\components\\connect.js",
+      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\react-router\\lib\\PatternUtils.js",
       "failed": false,
       "errors": 0,
       "warnings": 0,
@@ -6329,7 +6329,7 @@
         0
       ],
       "assets": [],
-      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\react-dom\\lib\\ReactDOMNullInputValuePropHook.js",
+      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\react-dom\\lib\\ReactDOMUnknownPropertyHook.js",
       "failed": false,
       "errors": 0,
       "warnings": 0,
@@ -7969,7 +7969,7 @@
         0
       ],
       "assets": [],
-      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\history\\lib\\useBasename.js",
+      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\history\\lib\\useQueries.js",
       "failed": false,
       "errors": 0,
       "warnings": 0,
@@ -12425,7 +12425,7 @@
         0
       ],
       "assets": [],
-      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\history\\lib\\useBasename.js",
+      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\history\\lib\\useQueries.js",
       "failed": false,
       "errors": 0,
       "warnings": 0,
@@ -12475,7 +12475,7 @@
         0
       ],
       "assets": [],
-      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\react-redux\\lib\\components\\connect.js",
+      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\react-router\\lib\\withRouter.js",
       "failed": false,
       "errors": 0,
       "warnings": 0,
@@ -18361,7 +18361,7 @@
         0
       ],
       "assets": [],
-      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\rxjs\\util\\subscribeToResult.js",
+      "issuer": "E:\\Projects\\work\\logistic-system-dolce\\node_modules\\rxjs\\observable\\FromObservable.js",
       "failed": false,
       "errors": 0,
       "warnings": 0,
