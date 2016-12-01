@@ -1,6 +1,14 @@
 const karmaWebpack = require('karma-webpack');
 const webpack = require('webpack');
 const path = require('path');
+const autoprefixer = require('autoprefixer');
+
+// Constants
+const PROJECT_SRC = path.resolve(__dirname, '..', 'src');
+
+// Loaders
+const cssLoader = `css?sourceMap&root=${PROJECT_SRC}`;
+const sassLoader = `sass?sourceMap&root=${PROJECT_SRC}`;
 
 module.exports = (config) => {
   config.set({
@@ -52,7 +60,9 @@ module.exports = (config) => {
         loaders: [
           {
             test: /\.scss$/,
-            loader: 'null'
+            loader: `style!${cssLoader}!postcss!${sassLoader}`,
+            // loaders: ["style", "css", "sass"],
+            exclude: /node_modules/
           },
           {
             test: /\.js$/,
@@ -65,6 +75,7 @@ module.exports = (config) => {
           }
         ]
       },
+      postcss: () => [autoprefixer],
       plugins: [
         new webpack.IgnorePlugin(/ReactContext/)
       ]

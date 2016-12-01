@@ -5,15 +5,25 @@
   "main": "src/server.js",
   "scripts": {
     "build": "webpack --verbose --colors --display-error-details --config ./webpack/webpack.config.prod.js",
+
     "dev": "concurrently --kill-others \"npm run dev:api\" \"npm run dev:server\" \"npm run webpack:server\"",
-    "dev:api": "set NODE_ENV=development nodemon --exec babel-node ./src/server/api-server.js",
-    "dev:server": "set NODE_ENV=development nodemon --exec babel-node ./src/server/server-wrapper.js",
+    "dev:api": "NODE_ENV=development nodemon --exec babel-node ./src/server/api-server.js",
+    "dev:server": "NODE_ENV=development nodemon --exec babel-node ./src/server/server-wrapper.js",
+    "webpack:server": "NODE_ENV=development babel-node ./src/server/dev-server.js",
+
     "start": "concurrently --kill-others \"npm run start:api\" \"npm run start:server\"",
     "start:api": "NODE_ENV=production babel-node ./src/server/api-server.js",
     "start:server": "NODE_ENV=production PORT=80 babel-node ./src/server/server-wrapper.js",
-    "webpack:server": "set NODE_ENV=development babel-node ./src/server/dev-server.js",
+
+    "stop:prod": "pm2 kill",
+
+    "start:prod": "npm run start:api:prod && npm run start:server:prod",
+    "start:api:prod": "NODE_ENV=production pm2 start ./src/server/api-server.js --interpreter babel-node",
+    "start:server:prod": "NODE_ENV=production pm2 start ./src/server/server-wrapper.js --interpreter babel-node",
+
     "test": "karma start karma.config.js --no-auto-watch --single-run",
     "test:watch": "karma start karma.config.js --auto-watch --no-single-run",
+
     "dev:win": "concurrently --kill-others \"npm run dev:api:win\" \"npm run dev:server:win\" \"npm run webpack:server:win\"",
     "dev:api:win": "set NODE_ENV=development&& nodemon --exec babel-node src\\server\\api-server.js",
     "dev:server:win": "set NODE_ENV=development&& nodemon --exec babel-node src\\server\\server-wrapper.js",
@@ -33,6 +43,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "chai": "^3.5.0",
+    "clean-webpack-plugin": "^0.1.14",
     "css-loader": "^0.25.0",
     "enzyme": "^2.6.0",
     "eslint": "^3.9.0",
