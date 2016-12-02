@@ -1,5 +1,5 @@
 FROM node
-MAINTAINER Mateo Quintero <quinterom1592@gmail.com>
+# MAINTAINER Mateo Quintero <quinterom1592@gmail.com>
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
