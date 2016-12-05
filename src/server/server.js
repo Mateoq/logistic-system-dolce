@@ -112,6 +112,7 @@ function handleRender(req, res, next) {
 
       // Generate the React markup for the current route
       const preloadState = serialize(store.getState());
+      console.log(webpackIsomorphicTools.assets());
       markup = renderToString(
         <Provider store={store} key="provider">
           <RouterContext

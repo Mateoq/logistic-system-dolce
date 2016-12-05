@@ -34,9 +34,9 @@ module.exports = new Config()
       ]
     },
     output: {
-      filename: 'bundle.js',
+      filename: '[name]-[hash].js',
       path: ASSETS_PATH,
-      chunkFilename: 'bundle-[hash].js',
+      chunkFilename: '[name]-[hash].js',
       publicPath: `${webpackURL}assets/`
     },
     module: {

@@ -13,7 +13,7 @@
 
     "start": "concurrently --kill-others \"npm run start:api\" \"npm run start:server\"",
     "start:api": "NODE_ENV=production babel-node ./src/server/api-server.js",
-    "start:server": "NODE_ENV=production PORT=80 babel-node ./src/server/server-wrapper.js",
+    "start:server": "NODE_ENV=production babel-node ./src/server/server-wrapper.js",
 
     "stop:prod": "pm2 kill",
 
